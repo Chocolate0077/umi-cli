@@ -6,7 +6,7 @@ import { Button, Result } from 'antd';
 import { useModel } from 'umi';
 
 Sentry.init({
-  dsn: 'http://55cd8f3466274ad6981412b0ec50b698@localhost:9000/2',
+  dsn: process.env.SENTRY_DSN,
   autoSessionTracking: true,
   integrations: [new Integrations.BrowserTracing()],
   release: '1.0.0',
@@ -16,7 +16,9 @@ Sentry.init({
 });
 
 interface ErrorBoundaryProps {}
-const SentryErrorBoundary = ({ children }: PropsWithChildren<ErrorBoundaryProps>) => {
+const SentryErrorBoundary = ({
+  children,
+}: PropsWithChildren<ErrorBoundaryProps>) => {
   const { user } = useModel('useUser', (model) => ({ user: model.user }));
 
   return (
